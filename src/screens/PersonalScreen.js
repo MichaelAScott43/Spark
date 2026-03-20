@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
+  Image,
   ScrollView,
   TouchableOpacity,
   StyleSheet,
@@ -96,6 +97,12 @@ export default function PersonalScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.header}>
+          <Image
+            source={require('../../assets/icon.png')}
+            style={styles.headerLogo}
+            resizeMode="contain"
+            accessibilityLabel="Spark App Logo"
+          />
           <Text style={styles.headerEmoji}>💙</Text>
           <Text style={styles.headerTitle}>Personal Support</Text>
           <Text style={styles.headerSubtitle}>
@@ -156,6 +163,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: SPACING.lg,
     paddingTop: SPACING.md,
+  },
+  headerLogo: {
+    width: 80,
+    height: 80,
+    marginBottom: 12,
   },
   headerEmoji: {
     fontSize: 52,
