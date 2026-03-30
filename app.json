@@ -1,33 +1,25 @@
 {
   "expo": {
-    "name": "Spark",
-    "slug": "Spark",
+    "name": "Steady",
+    "slug": "steady",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "description": "Spark - Your AI companion for anxiety relief, professional growth, and a good laugh.",
+    "userInterfaceStyle": "automatic",
+    "description": "Steady - a calm safety-focused check-in and journaling companion.",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#F7F9FC"
+      "backgroundColor": "#101418"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.spark.anxietycompanion",
-      "infoPlist": {
-        "NSMicrophoneUsageDescription": "Spark uses your microphone to enable voice input so you can speak to your AI companion hands-free.",
-        "NSSpeechRecognitionUsageDescription": "Spark uses speech recognition to transcribe your voice messages."
-      }
+      "bundleIdentifier": "com.steady.app"
     },
     "android": {
-      "package": "com.spark.anxietycompanion",
-      "permissions": [
-        "android.permission.RECORD_AUDIO",
-        "android.permission.MODIFY_AUDIO_SETTINGS"
-      ],
+      "package": "com.steady.app",
       "adaptiveIcon": {
-        "backgroundColor": "#F7F9FC",
+        "backgroundColor": "#101418",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
@@ -35,14 +27,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "plugins": [
-      [
-        "expo-av",
-        {
-          "microphonePermission": "Spark uses your microphone to enable voice input so you can speak to your AI companion hands-free."
-        }
-      ]
-    ]
+    }
   }
 }
