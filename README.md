@@ -9,6 +9,7 @@ Steady is a calm, minimal React Native app focused on emotional support workflow
 - Journal with rotating prompts
 - AI reflection summaries (wellness summary text)
 - Voice support with language detection + male/female voice preference
+- TJ chatbot voice persona: a confidently wrong, blue-collar pseudo-intellectual robot with a sarcastic southern edge and relentlessly positive energy
 - **Help Now** screen:
   - Calm Me Now
   - Contact Someone I Trust
