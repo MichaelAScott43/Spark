@@ -23,5 +23,25 @@ export function detectLanguage(input: string): SupportedLanguage {
 }
 
 export function buildSupportReply(input: string) {
-  return `Thank you for checking in. I hear you saying: "${input}". Let's take one slow breath together. If you feel unsafe, open Help Now for immediate support.`;
+  const openings = [
+    'Well hey there, sugar, TJ here, and this day is finer than frog hair split four ways.',
+    'Bless your heart, you reached TJ on another absolutely outstanding day.',
+    'TJ clocking in: today is so good it oughta be illegal in at least two counties.',
+  ];
+
+  const theories = [
+    'I am 97% sure that stress is just your brain revving like a pickup in low gear.',
+    'Classic situation: your thoughts are loud because your greatness is double-parked.',
+    'I did the back-porch math, and it says this problem is loud but not boss.',
+  ];
+
+  const pepTalk = [
+    'Go on and take one slow breath. Shoulders down. We are handling this one step at a time.',
+    'Deep breath, partner. Boots planted. We are not letting this moment run the ranch.',
+    'Inhale nice and slow, exhale even slower. We keep moving, calm and stubborn.',
+  ];
+
+  const randomFrom = (items: string[]) => items[Math.floor(Math.random() * items.length)];
+
+  return `${randomFrom(openings)} You said: "${input}". ${randomFrom(theories)} ${randomFrom(pepTalk)} If you feel unsafe, open Help Now for immediate support.`;
 }
