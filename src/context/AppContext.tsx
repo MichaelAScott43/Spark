@@ -1,75 +1,79 @@
+import * as Speech from 'expo-speech';
 import React, { createContext, useContext, useMemo, useState } from 'react';
-import { CountryCode } from '../data/resources';
-import { SupportedLanguage } from '../utils/language';
-
-export type VoiceGender = 'female' | 'male';
+import { routeResponse } from '../services/responseRouter';
+import { CharacterId, ChatMessage, SupportMode } from '../types/chat';
 
 type AppState = {
-  onboardingDone: boolean;
-  country: CountryCode;
-  veteranMode: boolean;
-  moods: number[];
-  journals: string[];
-  trustedContacts: string[];
-  shareLocationOnHelp: boolean;
-  preferredVoiceGender: VoiceGender;
-  detectedLanguage: SupportedLanguage;
-  completeOnboarding: (country: CountryCode, veteranMode: boolean) => void;
-  addMood: (mood: number) => void;
-  addJournal: (entry: string) => void;
-  addTrustedContact: (name: string) => void;
-  setShareLocationOnHelp: (enabled: boolean) => void;
-  setPreferredVoiceGender: (gender: VoiceGender) => void;
-  setDetectedLanguage: (language: SupportedLanguage) => void;
+  selectedCharacter: CharacterId | null;
+  voiceEnabled: boolean;
+  mode: SupportMode;
+  messages: ChatMessage[];
+  isTyping: boolean;
+  setMode: (mode: SupportMode) => void;
+  setVoiceEnabled: (value: boolean) => void;
+  chooseCharacter: (character: CharacterId) => void;
+  sendMessage: (text: string) => Promise<void>;
+  resetConversation: () => void;
 };
 
 const AppContext = createContext<AppState | undefined>(undefined);
 
-export function AppProvider({ children }: { children: React.ReactNode }) {
-  const [onboardingDone, setOnboardingDone] = useState(false);
-  const [country, setCountry] = useState<CountryCode>('US');
-  const [veteranMode, setVeteranMode] = useState(false);
-  const [moods, setMoods] = useState<number[]>([]);
-  const [journals, setJournals] = useState<string[]>([]);
-  const [trustedContacts, setTrustedContacts] = useState<string[]>([]);
-  const [shareLocationOnHelp, setShareLocationOnHelp] = useState(false);
-  const [preferredVoiceGender, setPreferredVoiceGender] = useState<VoiceGender>('female');
-  const [detectedLanguage, setDetectedLanguage] = useState<SupportedLanguage>('en-US');
+function id() {
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
 
-  const value = useMemo(
+export function AppProvider({ children }: { children: React.ReactNode }) {
+  const [selectedCharacter, setSelectedCharacter] = useState<CharacterId | null>(null);
+  const [voiceEnabled, setVoiceEnabled] = useState(false);
+  const [mode, setMode] = useState<SupportMode>('vent');
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [isTyping, setIsTyping] = useState(false);
+
+  const value = useMemo<AppState>(
     () => ({
-      onboardingDone,
-      country,
-      veteranMode,
-      moods,
-      journals,
-      trustedContacts,
-      shareLocationOnHelp,
-      preferredVoiceGender,
-      detectedLanguage,
-      completeOnboarding: (selectedCountry: CountryCode, selectedVeteranMode: boolean) => {
-        setCountry(selectedCountry);
-        setVeteranMode(selectedVeteranMode);
-        setOnboardingDone(true);
+      selectedCharacter,
+      voiceEnabled,
+      mode,
+      messages,
+      isTyping,
+      setMode,
+      setVoiceEnabled,
+      chooseCharacter: (character) => setSelectedCharacter(character),
+      resetConversation: () => setMessages([]),
+      sendMessage: async (text: string) => {
+        const trimmed = text.trim();
+        if (!trimmed || !selectedCharacter) return;
+
+        const userMessage: ChatMessage = { id: id(), role: 'user', text: trimmed, createdAt: Date.now() };
+        const nextHistory = [...messages, userMessage];
+        setMessages(nextHistory);
+        setIsTyping(true);
+
+        await new Promise((resolve) => setTimeout(resolve, 700));
+
+        const routed = routeResponse({
+          character: selectedCharacter,
+          userMessage: trimmed,
+          mode,
+          history: nextHistory,
+        });
+
+        const assistantMessage: ChatMessage = {
+          id: id(),
+          role: 'assistant',
+          text: routed.text,
+          createdAt: Date.now(),
+        };
+
+        setMessages((prev) => [...prev, assistantMessage]);
+        setIsTyping(false);
+
+        if (voiceEnabled) {
+          Speech.speak(routed.text, { rate: 0.95, pitch: selectedCharacter === 'tj' ? 0.9 : 1.0 });
+        }
       },
-      addMood: (mood: number) => setMoods((prev) => [mood, ...prev].slice(0, 30)),
-      addJournal: (entry: string) => setJournals((prev) => [entry, ...prev].slice(0, 50)),
-      addTrustedContact: (name: string) => setTrustedContacts((prev) => [...prev, name]),
-      setShareLocationOnHelp,
-      setPreferredVoiceGender,
-      setDetectedLanguage,
     }),
-    [
-      onboardingDone,
-      country,
-      veteranMode,
-      moods,
-      journals,
-      trustedContacts,
-      shareLocationOnHelp,
-      preferredVoiceGender,
-      detectedLanguage,
-    ],
+    [selectedCharacter, voiceEnabled, mode, messages, isTyping],
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
@@ -80,5 +84,6 @@ export function useAppState() {
   if (!ctx) {
     throw new Error('useAppState must be used within AppProvider');
   }
+
   return ctx;
 }

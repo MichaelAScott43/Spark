@@ -5,21 +5,28 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "automatic",
-    "description": "Steady - a calm safety-focused check-in and journaling companion.",
+    "userInterfaceStyle": "dark",
+    "description": "Steady - non-clinical emotional support companion with TJ and Arlane personas.",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#101418"
+      "backgroundColor": "#0E1116"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.steady.app"
+      "bundleIdentifier": "com.steady.app",
+      "infoPlist": {
+        "NSSpeechRecognitionUsageDescription": "Steady uses speech recognition for optional voice chat input.",
+        "NSMicrophoneUsageDescription": "Steady uses your microphone for optional voice input."
+      }
     },
     "android": {
       "package": "com.steady.app",
+      "permissions": [
+        "RECORD_AUDIO"
+      ],
       "adaptiveIcon": {
-        "backgroundColor": "#101418",
+        "backgroundColor": "#0E1116",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
