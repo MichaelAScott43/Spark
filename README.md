@@ -1,33 +1,43 @@
-# Steady (Expo + TypeScript)
+# Steady (Expo React Native)
 
-Steady is a calm, minimal React Native app focused on emotional support workflows without diagnosis or therapy claims.
+Steady is a non-clinical emotional support companion app with two AI-style characters:
 
-## Included features
+- **TJ** – sarcastic, blunt, southern tough-love support
+- **Arlane** – warm, calm, grandmother-style comfort support
 
-- Onboarding with safety disclaimer
-- Daily mood check-in (1–5)
-- Journal with rotating prompts
-- AI reflection summaries (wellness summary text)
-- Voice support with language detection + male/female voice preference
-- **Help Now** screen:
-  - Calm Me Now
-  - Contact Someone I Trust
-  - Crisis Support Now
-- Safety plan with trusted contacts
-- Optional location sharing only when user triggers help
-- Pattern tracking for mood and journaling trends
-- Global support:
-  - Country selection
-  - Country-based crisis resources
-  - Veteran mode toggle
-  - US flag shown only for US veteran resources
+> Steady is **not** a therapy app and does not provide medical advice.
 
-## Design goals applied
+## MVP Included
 
-- Calm, minimal dark-friendly UI
-- Large buttons for distressed users
-- Clear language that avoids diagnosis and therapy framing
-- Crisis escalation path in Help Now
+- Character selection at first launch
+- Real-time chat UI with bubbles + typing indicator
+- Session memory (for active app session)
+- Voice mode:
+  - speech-to-text input (microphone)
+  - text-to-speech replies
+  - toggle in settings
+- Persona engine modules:
+  - `src/personas/tj.ts`
+  - `src/personas/arlane.ts`
+  - `src/services/responseRouter.ts`
+- Safety module override:
+  - `src/safety/index.ts`
+  - crisis detection for self-harm / suicidal language
+  - automatic 988 + emergency guidance
+- Quick support modes:
+  - I just need to vent
+  - Help me calm down
+  - Talk me through this
+- Settings:
+  - switch character
+  - voice on/off
+  - disclaimer + privacy notice
+- Google Play checklist:
+  - `docs/GOOGLE_PLAY_CHECKLIST.md`
+
+## Required disclaimer
+
+Steady is not a licensed therapist or medical service. If you are in crisis, contact emergency services or 988.
 
 ## Run locally
 
@@ -36,44 +46,18 @@ npm install
 npm run start
 ```
 
-Then launch on device/simulator:
+Run on Android:
 
 ```bash
 npm run android
-npm run ios
 ```
 
-## Project structure
+## Build for Google Play
 
-```text
-.
-├── App.tsx
-├── src
-│   ├── components
-│   │   ├── LargeButton.tsx
-│   │   └── ScreenContainer.tsx
-│   ├── constants
-│   │   └── theme.ts
-│   ├── context
-│   │   └── AppContext.tsx
-│   ├── data
-│   │   └── resources.ts
-│   ├── navigation
-│   │   └── RootNavigator.tsx
-│   ├── screens
-│   │   ├── CheckInScreen.tsx
-│   │   ├── HelpNowScreen.tsx
-│   │   ├── JournalScreen.tsx
-│   │   ├── OnboardingScreen.tsx
-│   │   ├── PatternsScreen.tsx
-│   │   ├── SafetyPlanScreen.tsx
-│   │   └── VoiceSupportScreen.tsx
-│   └── utils
-│       ├── language.ts
-│       └── reflection.ts
-└── tsconfig.json
+Use EAS build:
+
+```bash
+npx eas build --platform android --profile production
 ```
 
-## Safety notes
-
-Steady provides wellness-oriented guidance only. It does **not** diagnose, provide therapy, or replace emergency services. If someone may be in immediate danger, use local emergency resources right away.
+Full submission checklist is in `docs/GOOGLE_PLAY_CHECKLIST.md`.

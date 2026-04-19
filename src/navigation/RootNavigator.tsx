@@ -2,15 +2,12 @@ import React from 'react';
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { useAppState } from '../context/AppContext';
 import { colors } from '../constants/theme';
-import { OnboardingScreen } from '../screens/OnboardingScreen';
-import { CheckInScreen } from '../screens/CheckInScreen';
-import { JournalScreen } from '../screens/JournalScreen';
-import { HelpNowScreen } from '../screens/HelpNowScreen';
-import { SafetyPlanScreen } from '../screens/SafetyPlanScreen';
-import { PatternsScreen } from '../screens/PatternsScreen';
-import { VoiceSupportScreen } from '../screens/VoiceSupportScreen';
+import { useAppState } from '../context/AppContext';
+import { CharacterSelectionScreen } from '../screens/CharacterSelectionScreen';
+import { ChatScreen } from '../screens/ChatScreen';
+import { DisclaimerScreen } from '../screens/DisclaimerScreen';
+import { SettingsScreen } from '../screens/SettingsScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -19,29 +16,50 @@ function MainTabs() {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarStyle: { backgroundColor: colors.card, borderTopColor: colors.border },
-        tabBarActiveTintColor: colors.primary,
         headerStyle: { backgroundColor: colors.background },
         headerTintColor: colors.text,
+        tabBarStyle: { backgroundColor: colors.card, borderTopColor: colors.border },
+        tabBarActiveTintColor: colors.primary,
       }}
     >
-      <Tab.Screen name="Check-In" component={CheckInScreen} />
-      <Tab.Screen name="Journal" component={JournalScreen} />
-      <Tab.Screen name="Help Now" component={HelpNowScreen} />
-      <Tab.Screen name="Safety Plan" component={SafetyPlanScreen} />
-      <Tab.Screen name="Patterns" component={PatternsScreen} />
-      <Tab.Screen name="Voice" component={VoiceSupportScreen} />
+      <Tab.Screen name="Chat" component={ChatScreen} options={{ headerShown: false }} />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   );
 }
 
 export function RootNavigator() {
-  const { onboardingDone } = useAppState();
+  const { selectedCharacter } = useAppState();
 
   return (
-    <NavigationContainer theme={{ ...DarkTheme, colors: { ...DarkTheme.colors, background: colors.background, card: colors.card, text: colors.text } }}>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {!onboardingDone ? <Stack.Screen name="Onboarding" component={OnboardingScreen} /> : <Stack.Screen name="Home" component={MainTabs} />}
+    <NavigationContainer
+      theme={{
+        ...DarkTheme,
+        colors: {
+          ...DarkTheme.colors,
+          background: colors.background,
+          card: colors.card,
+          text: colors.text,
+          border: colors.border,
+          primary: colors.primary,
+        },
+      }}
+    >
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: { backgroundColor: colors.background },
+          headerTintColor: colors.text,
+          cardStyle: { backgroundColor: colors.background },
+        }}
+      >
+        {!selectedCharacter ? (
+          <Stack.Screen name="CharacterSelection" component={CharacterSelectionScreen} options={{ headerShown: false }} />
+        ) : (
+          <>
+            <Stack.Screen name="Home" component={MainTabs} options={{ headerShown: false }} />
+            <Stack.Screen name="Disclaimer" component={DisclaimerScreen} />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
