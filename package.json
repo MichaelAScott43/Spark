@@ -1,7 +1,8 @@
 {
-  "name": "anchor-ai-chief-of-staff",
+  "name": "chief-of-staff-ai",
   "private": true,
   "version": "1.0.0",
+  "type": "module",
   "workspaces": [
     "client",
     "server"
@@ -9,7 +10,7 @@
   "scripts": {
     "dev": "concurrently \"npm run dev --workspace server\" \"npm run dev --workspace client\"",
     "build": "npm run build --workspace client",
-    "start": "npm run start --workspace server"
+    "start": "node server.js"
   },
   "devDependencies": {
     "concurrently": "^9.2.1"

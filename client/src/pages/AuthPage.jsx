@@ -33,7 +33,9 @@ const AuthPage = ({ mode }) => {
       <div className="mx-auto flex min-h-screen max-w-md items-center px-6">
         <form onSubmit={submit} className="w-full rounded-2xl border border-slate-800 bg-slate-900 p-8 shadow-xl">
           <h1 className="text-3xl font-semibold">{isLogin ? 'Welcome back' : 'Create account'}</h1>
-          <p className="mt-2 text-slate-400">{isLogin ? 'Log in to Anchor.' : 'Start your free trial.'}</p>
+          <p className="mt-2 text-slate-400">
+            {isLogin ? 'Log in to CHIEF OF STAFF AI.' : 'Register to access your decision operating system.'}
+          </p>
           <div className="mt-6 space-y-4">
             <input className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3" placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
             <input className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3" placeholder="Password" type="password" minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} required />
