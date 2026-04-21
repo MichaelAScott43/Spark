@@ -1,63 +1,76 @@
-# Steady (Expo React Native)
+# Anchor - AI Chief of Staff
 
-Steady is a non-clinical emotional support companion app with two AI-style characters:
+Production-ready SaaS MVP using React (Vite), Tailwind, Node/Express, MongoDB, JWT auth, and OpenAI.
 
-- **TJ** – sarcastic, blunt, southern tough-love support
-- **Arlane** – warm, calm, grandmother-style comfort support
+## Project Structure
 
-> Steady is **not** a therapy app and does not provide medical advice.
-
-## MVP Included
-
-- Character selection at first launch
-- Real-time chat UI with bubbles + typing indicator
-- Session memory (for active app session)
-- Voice mode:
-  - speech-to-text input (microphone)
-  - text-to-speech replies
-  - toggle in settings
-- Persona engine modules:
-  - `src/personas/tj.ts`
-  - `src/personas/arlane.ts`
-  - `src/services/responseRouter.ts`
-- Safety module override:
-  - `src/safety/index.ts`
-  - crisis detection for self-harm / suicidal language
-  - automatic 988 + emergency guidance
-- Quick support modes:
-  - I just need to vent
-  - Help me calm down
-  - Talk me through this
-- Settings:
-  - switch character
-  - voice on/off
-  - disclaimer + privacy notice
-- Google Play checklist:
-  - `docs/GOOGLE_PLAY_CHECKLIST.md`
-
-## Required disclaimer
-
-Steady is not a licensed therapist or medical service. If you are in crisis, contact emergency services or 988.
-
-## Run locally
-
-```bash
-npm install
-npm run start
+```
+.
+├── client
+│   ├── src
+│   │   ├── api
+│   │   ├── components
+│   │   ├── context
+│   │   ├── pages
+│   │   └── styles
+│   ├── index.html
+│   ├── package.json
+│   ├── postcss.config.js
+│   ├── tailwind.config.js
+│   └── vite.config.js
+├── server
+│   ├── src
+│   │   ├── config
+│   │   ├── middleware
+│   │   ├── models
+│   │   ├── routes
+│   │   ├── services
+│   │   ├── utils
+│   │   └── index.js
+│   └── package.json
+├── .env.example
+└── package.json
 ```
 
-Run on Android:
+## Setup
 
-```bash
-npm run android
-```
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Copy env file:
+   ```bash
+   cp .env.example .env
+   ```
+3. Update `.env` values (`MONGO_URI`, `JWT_SECRET`, `OPENAI_API_KEY`, etc.).
+4. Run dev servers:
+   ```bash
+   npm run dev
+   ```
 
-## Build for Google Play
+- Frontend: `http://localhost:5173`
+- Backend: `http://localhost:5000`
 
-Use EAS build:
+## API Routes
 
-```bash
-npx eas build --platform android --profile production
-```
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `POST /api/triage`
+- `POST /api/tasks`
+- `GET /api/tasks`
+- `PATCH /api/tasks/:id`
+- `POST /api/debrief`
 
-Full submission checklist is in `docs/GOOGLE_PLAY_CHECKLIST.md`.
+## Render Deployment Notes
+
+- Create two Render services:
+  - **Web Service (server)**
+    - Root Directory: `server`
+    - Build Command: `npm install`
+    - Start Command: `npm start`
+  - **Static Site (client)** or Web Service
+    - Root Directory: `client`
+    - Build Command: `npm install && npm run build`
+    - Publish Directory: `dist`
+- Set environment variables from `.env.example`.
+- Set `VITE_API_URL` in client service to backend URL + `/api`.

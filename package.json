@@ -1,29 +1,17 @@
 {
-  "name": "steady",
+  "name": "anchor-ai-chief-of-staff",
+  "private": true,
   "version": "1.0.0",
-  "main": "index.js",
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
-  },
-  "dependencies": {
-    "@react-navigation/bottom-tabs": "^7.15.5",
-    "@react-navigation/native": "^7.1.33",
-    "@react-navigation/stack": "^7.8.4",
-    "expo": "~55.0.5",
-    "expo-speech": "~14.0.7",
-    "expo-status-bar": "~55.0.4",
-    "react": "19.2.0",
-    "react-native": "0.83.2",
-    "react-native-gesture-handler": "~2.30.0",
-    "react-native-safe-area-context": "~5.6.2",
-    "react-native-screens": "~4.23.0"
+    "dev": "concurrently \"npm run dev --workspace server\" \"npm run dev --workspace client\"",
+    "build": "npm run build --workspace client",
+    "start": "npm run start --workspace server"
   },
   "devDependencies": {
-    "@types/react": "~19.2.2",
-    "typescript": "~5.9.3"
-  },
-  "private": true
+    "concurrently": "^9.2.1"
+  }
 }
