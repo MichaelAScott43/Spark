@@ -1,11 +1,11 @@
 {
-  "name": "anchor-server",
+  "name": "chief-of-staff-ai-server",
   "version": "1.0.0",
-  "main": "src/index.js",
   "type": "module",
+  "main": "server.js",
   "scripts": {
-    "dev": "nodemon src/index.js",
-    "start": "node src/index.js"
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -13,7 +13,7 @@
     "dotenv": "^16.6.1",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.19.3",
+    "multer": "^2.0.2",
     "openai": "^4.104.0"
   },
   "devDependencies": {
