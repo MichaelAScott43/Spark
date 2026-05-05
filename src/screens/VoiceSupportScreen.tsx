@@ -59,11 +59,13 @@ export function VoiceSupportScreen() {
 
   return (
     <ScreenContainer title="Voice Support">
-      <Text style={styles.text}>Steady can detect language from the message and respond with your selected voice style.</Text>
+      <Text style={styles.text}>
+        Meet TJ: a confidently wrong, blue-collar pseudo-intellectual robot with a sarcastic southern edge who insists every day is outstanding.
+      </Text>
       <TextInput
         value={input}
         onChangeText={setInput}
-        placeholder="Type what the user said..."
+        placeholder="Type what TJ should respond to..."
         placeholderTextColor={colors.muted}
         multiline
         style={styles.input}
@@ -73,7 +75,7 @@ export function VoiceSupportScreen() {
         <LargeButton label="Female voice" onPress={() => setPreferredVoiceGender('female')} variant={preferredVoiceGender === 'female' ? 'primary' : 'secondary'} />
         <LargeButton label="Male voice" onPress={() => setPreferredVoiceGender('male')} variant={preferredVoiceGender === 'male' ? 'primary' : 'secondary'} />
       </View>
-      <LargeButton label="Detect language + Talk back" onPress={speakBack} />
+      <LargeButton label="Let TJ talk back" onPress={speakBack} />
       <Text style={styles.detected}>Detected language: {languageLabel}</Text>
     </ScreenContainer>
   );

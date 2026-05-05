@@ -4,6 +4,37 @@ Production-ready SaaS MVP using React (Vite), Tailwind, Node/Express, MongoDB, J
 
 ## Project Structure
 
+- Onboarding with safety disclaimer
+- Daily mood check-in (1–5)
+- Journal with rotating prompts
+- AI reflection summaries (wellness summary text)
+- Voice support with language detection + male/female voice preference
+- TJ chatbot voice persona: a confidently wrong, blue-collar pseudo-intellectual robot with a sarcastic southern edge and relentlessly positive energy
+- **Help Now** screen:
+  - Calm Me Now
+  - Contact Someone I Trust
+  - Crisis Support Now
+- Safety plan with trusted contacts
+- Optional location sharing only when user triggers help
+- Pattern tracking for mood and journaling trends
+- Global support:
+  - Country selection
+  - Country-based crisis resources
+  - Veteran mode toggle
+  - US flag shown only for US veteran resources
+
+## Design goals applied
+
+- Calm, minimal dark-friendly UI
+- Large buttons for distressed users
+- Clear language that avoids diagnosis and therapy framing
+- Crisis escalation path in Help Now
+
+## Run locally
+
+```bash
+npm install
+npm run start
 ```
 .
 ├── client
