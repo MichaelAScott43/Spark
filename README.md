@@ -1,8 +1,8 @@
-# Steady (Expo + TypeScript)
+# Anchor - AI Chief of Staff
 
-Steady is a calm, minimal React Native app focused on emotional support workflows without diagnosis or therapy claims.
+Production-ready SaaS MVP using React (Vite), Tailwind, Node/Express, MongoDB, JWT auth, and OpenAI.
 
-## Included features
+## Project Structure
 
 - Onboarding with safety disclaimer
 - Daily mood check-in (1–5)
@@ -36,45 +36,72 @@ Steady is a calm, minimal React Native app focused on emotional support workflow
 npm install
 npm run start
 ```
-
-Then launch on device/simulator:
-
-```bash
-npm run android
-npm run ios
-```
-
-## Project structure
-
-```text
 .
-├── App.tsx
-├── src
-│   ├── components
-│   │   ├── LargeButton.tsx
-│   │   └── ScreenContainer.tsx
-│   ├── constants
-│   │   └── theme.ts
-│   ├── context
-│   │   └── AppContext.tsx
-│   ├── data
-│   │   └── resources.ts
-│   ├── navigation
-│   │   └── RootNavigator.tsx
-│   ├── screens
-│   │   ├── CheckInScreen.tsx
-│   │   ├── HelpNowScreen.tsx
-│   │   ├── JournalScreen.tsx
-│   │   ├── OnboardingScreen.tsx
-│   │   ├── PatternsScreen.tsx
-│   │   ├── SafetyPlanScreen.tsx
-│   │   └── VoiceSupportScreen.tsx
-│   └── utils
-│       ├── language.ts
-│       └── reflection.ts
-└── tsconfig.json
+├── client
+│   ├── src
+│   │   ├── api
+│   │   ├── components
+│   │   ├── context
+│   │   ├── pages
+│   │   └── styles
+│   ├── index.html
+│   ├── package.json
+│   ├── postcss.config.js
+│   ├── tailwind.config.js
+│   └── vite.config.js
+├── server
+│   ├── src
+│   │   ├── config
+│   │   ├── middleware
+│   │   ├── models
+│   │   ├── routes
+│   │   ├── services
+│   │   ├── utils
+│   │   └── index.js
+│   └── package.json
+├── .env.example
+└── package.json
 ```
 
-## Safety notes
+## Setup
 
-Steady provides wellness-oriented guidance only. It does **not** diagnose, provide therapy, or replace emergency services. If someone may be in immediate danger, use local emergency resources right away.
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Copy env file:
+   ```bash
+   cp .env.example .env
+   ```
+3. Update `.env` values (`MONGO_URI`, `JWT_SECRET`, `OPENAI_API_KEY`, etc.).
+4. Run dev servers:
+   ```bash
+   npm run dev
+   ```
+
+- Frontend: `http://localhost:5173`
+- Backend: `http://localhost:5000`
+
+## API Routes
+
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `POST /api/triage`
+- `POST /api/tasks`
+- `GET /api/tasks`
+- `PATCH /api/tasks/:id`
+- `POST /api/debrief`
+
+## Render Deployment Notes
+
+- Create two Render services:
+  - **Web Service (server)**
+    - Root Directory: `server`
+    - Build Command: `npm install`
+    - Start Command: `npm start`
+  - **Static Site (client)** or Web Service
+    - Root Directory: `client`
+    - Build Command: `npm install && npm run build`
+    - Publish Directory: `dist`
+- Set environment variables from `.env.example`.
+- Set `VITE_API_URL` in client service to backend URL + `/api`.

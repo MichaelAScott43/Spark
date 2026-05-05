@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: chief-of-staff-ai
+    env: node
+    plan: starter
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: JWT_SECRET
+        generateValue: true
+      - key: OPENAI_MODEL
+        value: gpt-4.1-mini
